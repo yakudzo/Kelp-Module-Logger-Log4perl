@@ -97,14 +97,7 @@ Write log message to $DEBUG/$INFO/$ERROR level.
 ## logger
 
 Write message to one of the following default [Log::Log4perl](https://metacpan.org/pod/Log::Log4perl) log levels:
-
-- trace
-- debug
-- info
-- warn
-- error
-- fatal
-- always
+`trace`, `debug`, `info`, `warn`, `error`, `fatal`, `always`.
 
     # inside controller
     $c->logger( 'always', @messages );
