@@ -1,6 +1,7 @@
 {{$NEXT}}
         - Updated meta.
         - Added Test::Pod as test requires.
+        - Added perl minimum version
 0.002  2016-11-26 11:55:23 MSK
         - Added Log::Dispatch levels for backward compability
         - Fixed typo in documentation
