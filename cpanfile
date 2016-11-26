@@ -8,5 +8,6 @@ on 'test' => sub {
     requires 'Test::Output';
     requires 'Test::More';
     requires 'HTTP::Request::Common';
+    requires 'Test::Pod';
 };
 

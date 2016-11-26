@@ -26,7 +26,8 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "Module::Build::Tiny" : "0.034"
+            "Module::Build::Tiny" : "0.034",
+            "perl" : "5.008"
          }
       },
       "develop" : {
@@ -39,7 +40,8 @@
          "requires" : {
             "Data::Dumper" : "0",
             "Kelp" : "0",
-            "Log::Log4perl" : "0"
+            "Log::Log4perl" : "0",
+            "perl" : "5.008"
          }
       },
       "test" : {
@@ -48,8 +50,16 @@
             "Kelp" : "0",
             "Kelp::Test" : "0",
             "Test::More" : "0",
-            "Test::Output" : "0"
+            "Test::Output" : "0",
+            "Test::Pod" : "0",
+            "perl" : "5.008"
          }
+      }
+   },
+   "provides" : {
+      "Kelp::Module::Logger::Log4perl" : {
+         "file" : "lib/Kelp/Module/Logger/Log4perl.pm",
+         "version" : "0.002"
       }
    },
    "release_status" : "stable",

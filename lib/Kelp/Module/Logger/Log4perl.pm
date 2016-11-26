@@ -1,5 +1,5 @@
 package Kelp::Module::Logger::Log4perl;
-our $VERSION = "0.002";
+our $VERSION = "0.003";
 $VERSION = eval $VERSION;
 use strict;
 use warnings;
