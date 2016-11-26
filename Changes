@@ -1,4 +1,6 @@
 {{$NEXT}}
+
+0.002  2016-11-26 11:55:23 MSK
         - Added Log::Dispatch levels for backward compability
         - Fixed typo in documentation
         - Added use strict and warnings

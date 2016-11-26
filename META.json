@@ -64,7 +64,7 @@
          "web" : "https://github.com/yakudzo/Kelp-Module-Logger-Log4perl"
       }
    },
-   "version" : "0.001",
+   "version" : "0.002",
    "x_contributors" : [
       "Konstantin Yakunin <twinhooker@gmail.com>"
    ],
