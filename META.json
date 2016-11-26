@@ -59,7 +59,7 @@
    "provides" : {
       "Kelp::Module::Logger::Log4perl" : {
          "file" : "lib/Kelp/Module/Logger/Log4perl.pm",
-         "version" : "0.002"
+         "version" : "0.003"
       }
    },
    "release_status" : "stable",
@@ -74,7 +74,7 @@
          "web" : "https://github.com/yakudzo/Kelp-Module-Logger-Log4perl"
       }
    },
-   "version" : "0.002",
+   "version" : "0.003",
    "x_contributors" : [
       "Konstantin Yakunin <twinhooker@gmail.com>"
    ],

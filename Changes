@@ -1,4 +1,6 @@
 {{$NEXT}}
+
+0.003  2016-11-26 21:20:22 MSK
         - Updated meta.
         - Added Test::Pod as test requires.
         - Added perl minimum version
