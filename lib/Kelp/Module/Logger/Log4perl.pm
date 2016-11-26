@@ -1,16 +1,30 @@
 package Kelp::Module::Logger::Log4perl;
 our $VERSION = "0.001";
 $VERSION = eval $VERSION;
+use strict;
+use warnings;
 
 use Kelp::Base 'Kelp::Module::Logger';
-use Log::Log4perl qw( :levels );
+use Log::Log4perl;
+use Log::Log4perl::Level;
 use Data::Dumper;
 
 attr 'category' => '';
 
+use constant ({
+    NOTICE    => $INFO + 1,
+    CRITICAL  => $ERROR + 1,
+    ALERT     => $FATAL + 1,
+    EMERGENCY => $OFF - 1
+});
+
 sub _logger {
     my ( $self, %args ) = @_;
     
+    Log::Log4perl::Level::add_priority('NOTICE',    NOTICE,     2, 2);
+    Log::Log4perl::Level::add_priority('CRITICAL',  CRITICAL,   0, 5);
+    Log::Log4perl::Level::add_priority('ALERT',     ALERT,     -1, 6);
+    Log::Log4perl::Level::add_priority('EMERGENCY', EMERGENCY, -1, 7);
     Log::Log4perl->init($args{conf});
 
     return Log::Log4perl->get_logger($args{category} || '');
@@ -21,13 +35,18 @@ sub message {
     my ($self, $level, @messages) = @_;
 
     my %LEVELS_map = (
-        'trace'  => $TRACE,
-        'debug'  => $DEBUG,
-        'info'   => $INFO,
-        'warn'   => $WARN,
-        'error'  => $ERROR,
-        'fatal'  => $FATAL,
-        'always' => $OFF,
+        trace     => $TRACE,
+        debug     => $DEBUG,
+        info      => $INFO,
+        warn      => $WARN,
+        error     => $ERROR,
+        fatal     => $FATAL,
+        always    => $OFF,
+
+        notice    => NOTICE,
+        critical  => CRITICAL,
+        alert     => ALERT,
+        emergency => EMERGENCY,
     );
     
     for (@messages) {
@@ -49,7 +68,7 @@ Kelp::Module::Logger::Log4perl - Log4perl for Kelp applications
 =head1 DESCRIPTION
 
 This module provides log interface for Kelp web application. It uses
-L<Log::Log4perl> instead of L<Log::Dispacher>. 
+L<Log::Log4perl> instead of L<Log::Dispatch>. 
 
 =head1 SYNOPSIS
 
@@ -142,10 +161,14 @@ Write log message to $DEBUG/$INFO/$ERROR level.
 =head2 logger
 
 Write message to one of the following default L<Log::Log4perl> log levels:
-C<trace>, C<debug>, C<info>, C<warn>, C<error>, C<fatal>, C<always>.
+C<trace>, C<debug>, C<info>, C<warn>, C<error>, C<fatal>, C<always>. For
+backward compability you can use L<Log::Dispatch> levels too.
 
     # inside controller
     $c->logger( 'always', @messages );
+
+    # log dispatch level
+    $c->logger( 'notice', 'Some notice' );
 
 =head1 AUTHOR
 

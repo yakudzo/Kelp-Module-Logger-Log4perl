@@ -8,7 +8,8 @@
 #   yakudza <twinhooker@gmail.com>     2016/11/13 20:17:45
 
 #########################
-
+use strict;
+use warnings;
 use Test::More;
 use Kelp;
 use Kelp::Test;
@@ -17,23 +18,36 @@ use Test::More;
 use HTTP::Request::Common;
 
 BEGIN {
-    use_ok( Kelp::Module::Logger::Log4perl );
+    use_ok( 'Kelp::Module::Logger::Log4perl' );
     $ENV{KELP_REDEFINE} = 1;
 }
 
 
 #########################
 
-my %tests = (
-    normal            => qr/DEBUG .* normal .* ERROR .* normal .* OFF .* normal .* INFO/mxs,
-    separate_file     => qr(DEBUG .* separate_file .* ERROR .* separate_file .* OFF .* separate_file .* INFO)mxs,
-    scalar_ref        => qr(DEBUG .* scalar_ref .* ERROR .* scalar_ref .* OFF .* scalar_ref .* INFO)mxs,
-    category_selected => qr([^DEBUG] .* ERROR .* category_selected .* OFF .* category_selected .* INFO)mxs,
-);
+my $standart_re = sub {
+    my $test_type   = shift;
+    my $standart_re = qr(DEBUG .* $test_type .*
+                        ERROR .* $test_type .*
+                        NOTICE .* $test_type .*
+                        FATAL  .* $test_type .*
+                        ALERT  .* $test_type .*
+                        CRITICAL .* $test_type .*
+                        OFF .*)msx;
+    return $standart_re;
+};
 
-for my $mode (keys %tests) {
-    stdout_like( sub { run_t( $mode ) }, $tests{ $mode }, 'Output test' );
+my $category_re = qr(ERROR .* category_selected .*
+                     FATAL .* category_selected .*
+                     ALERT .* category_selected .*
+                     CRITICAL .* category_selected .*
+                     OFF .*)msx;
+
+for my $mode (qw(normal scalar_ref separate_file)) {
+    stdout_like( sub { run_t( $mode ) }, $standart_re->( $mode ), "Output test $mode" );
 }
+
+stdout_like( sub { run_t( 'category_selected' ) }, $category_re, "Output test category_selected" );
 
 done_testing;
 
@@ -49,7 +63,13 @@ sub run_t {
             my $self = shift;
             $self->debug("Debug message with $test config.");
             $self->error("Error message with $test config.");
-            $self->logger('always', "Critical message with $test config.");
+
+            $self->logger('notice', "Notice message with $test config.");
+
+            $self->logger('fatal', "Fatal message with $test config.");
+            $self->logger('alert', "Alert message with $test config.");
+            $self->logger('critical', "Critical message with $test config.");
+            $self->logger('always', "Always message with $test config.");
             "ok";
         }
     );

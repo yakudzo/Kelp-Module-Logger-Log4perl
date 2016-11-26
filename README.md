@@ -5,7 +5,7 @@ Kelp::Module::Logger::Log4perl - Log4perl for Kelp applications
 # DESCRIPTION
 
 This module provides log interface for Kelp web application. It uses
-[Log::Log4perl](https://metacpan.org/pod/Log::Log4perl) instead of [Log::Dispacher](https://metacpan.org/pod/Log::Dispacher). 
+[Log::Log4perl](https://metacpan.org/pod/Log::Log4perl) instead of [Log::Dispatch](https://metacpan.org/pod/Log::Dispatch). 
 
 # SYNOPSIS
 
@@ -97,10 +97,14 @@ Write log message to $DEBUG/$INFO/$ERROR level.
 ## logger
 
 Write message to one of the following default [Log::Log4perl](https://metacpan.org/pod/Log::Log4perl) log levels:
-`trace`, `debug`, `info`, `warn`, `error`, `fatal`, `always`.
+`trace`, `debug`, `info`, `warn`, `error`, `fatal`, `always`. For
+backward compability you can use [Log::Dispatch](https://metacpan.org/pod/Log::Dispatch) levels too.
 
     # inside controller
     $c->logger( 'always', @messages );
+
+    # log dispatch level
+    $c->logger( 'notice', 'Some notice' );
 
 # AUTHOR
 
